@@ -12,7 +12,6 @@ command in Julia v1.8 or later to install the
 
 ```julia
 julia> using Pkg
-
 julia> Pkg.activate("/path/to/cross-platform-opencl")
 julia> Pkg.instantiate()
 ```
@@ -22,8 +21,8 @@ julia> Pkg.instantiate()
 The following command can be run from the root
 directory of the project:
 
-```bash
-bash> julia --project --color=yes build_tarballs.jl
+```sh
+$ julia --project --color=yes build_tarballs.jl
 ```
 
 The option `--project` activates the enviroment
@@ -34,8 +33,8 @@ If you want to build OpenCL for a specific platform
 not listed in `build_tarballs.jl`, you can
 pass the name of the platform in the command line:
 
-```bash
-bash> julia --project --color=yes build_tarballs.jl x86_64-linux-musl
+```sh
+$ julia --project --color=yes build_tarballs.jl x86_64-linux-musl
 ```
 
 The available names of platforms supported by `BinaryBuilder.jl`
