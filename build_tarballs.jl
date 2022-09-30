@@ -46,6 +46,7 @@ platforms = [
 
 # The products that we will ensure are always built
 products = [
+    FileProduct("include/CL/cl.h", :cl_h),
     LibraryProduct("libOpenCL", :libcl)
 ]
 
