@@ -22,19 +22,19 @@ The following command can be run from the root
 directory of the project:
 
 ```sh
-$ julia --project --color=yes build_tarballs.jl
+$ julia --project build_tarballs.jl
 ```
 
 The option `--project` activates the enviroment
-of the folder and the option `--color=yes` enables
-colored output.
+of the folder, which contains the `build_tarballs.jl`
+script.
 
 If you want to build OpenCL for a specific platform
 not listed in `build_tarballs.jl`, you can
 pass the name of the platform in the command line:
 
 ```sh
-$ julia --project --color=yes build_tarballs.jl x86_64-linux-musl
+$ julia --project build_tarballs.jl x86_64-linux-musl
 ```
 
 The available names of platforms supported by `BinaryBuilder.jl`
@@ -80,4 +80,10 @@ julia> triplet.(plats)
  "x86_64-unknown-freebsd"
  "i686-w64-mingw32"
  "x86_64-w64-mingw32"
+```
+
+For additional options, please check the help:
+
+```sh
+$ julia --project build_tarballs.jl --help
 ```
