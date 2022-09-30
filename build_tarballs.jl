@@ -14,11 +14,15 @@ sources = [
 # Bash recipe for building across all platforms
 script = raw"""
 cd $WORKSPACE/srcdir
+
 install_license ./OpenCL-Headers/LICENSE
+
 wget https://patch-diff.githubusercontent.com/raw/KhronosGroup/OpenCL-Headers/pull/209.patch
 patch ./OpenCL-Headers/tests/test_headers.c 209.patch
+
 cmake -DCMAKE_INSTALL_PREFIX=${prefix} -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release -S ./OpenCL-Headers -B ./OpenCL-Headers/build
 cmake --build ./OpenCL-Headers/build --target install -j${nproc}
+
 cmake -DCMAKE_PREFIX_PATH=${prefix} -DCMAKE_INSTALL_PREFIX=${prefix} -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release -S ./OpenCL-ICD-Loader -B ./OpenCL-ICD-Loader/build
 cmake --build ./OpenCL-ICD-Loader/build --target install -j${nproc}
 """
@@ -42,7 +46,7 @@ platforms = [
 
 # The products that we will ensure are always built
 products = [
-    LibraryProduct("libOpenCL", :libopencl)
+    LibraryProduct("libOpenCL", :libcl)
 ]
 
 # Dependencies that must be installed before this package can be built
