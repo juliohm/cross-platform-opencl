@@ -82,7 +82,7 @@ julia> triplet.(plats)
  "x86_64-w64-mingw32"
 ```
 
-For additional options, please check the help:
+For additional options:
 
 ```sh
 $ julia --project build_tarballs.jl --help
