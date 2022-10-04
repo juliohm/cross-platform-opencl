@@ -1,7 +1,7 @@
 # OpenCL cross-compilation
 
 This project contains a simple Julia script to
-cross-compile OpenCL on different (currently 13)
+cross-compile OpenCL on different (currently 14)
 platforms.
 
 ## Installation
