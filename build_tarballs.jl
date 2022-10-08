@@ -3,16 +3,16 @@
 using BinaryBuilder, Pkg
 
 name = "OpenCL"
-version = v"2022.09.23"
+version = v"2022.09.30"
 
 # Collection of sources required to complete build
 sources = [
-    GitSource("https://github.com/KhronosGroup/OpenCL-Headers.git", "4c50fabe3774bad4bdda9c1ca92c82574109a74a"),
-    GitSource("https://github.com/KhronosGroup/OpenCL-ICD-Loader.git", "3dae4803532b11d74e4dc216ee72570c1a4bff24"),
-    FileSource("https://patch-diff.githubusercontent.com/raw/KhronosGroup/OpenCL-Headers/pull/209.patch",
-               "c3afd4ad0a37f0b61c0b8656ca4914002ba7994bba05aa2c47fde59b652289c9"),
+    GitSource("https://github.com/KhronosGroup/OpenCL-Headers.git", "a51354a85f41d203e755124ad51ae3425933df45"),
+    GitSource("https://github.com/KhronosGroup/OpenCL-ICD-Loader.git", "4aa683775c4ee55594196c79def7a75103d75e4c"),
     FileSource("https://patch-diff.githubusercontent.com/raw/KhronosGroup/OpenCL-ICD-Loader/pull/185.patch",
-               "82725e3ec4e9fe333aeb53f75e13b74cef22c7cb662ee2af51108f0d764e1985")
+               "82725e3ec4e9fe333aeb53f75e13b74cef22c7cb662ee2af51108f0d764e1985"),
+    FileSource("https://patch-diff.githubusercontent.com/raw/KhronosGroup/OpenCL-ICD-Loader/pull/186.patch",
+               "032d4f5e167312252362422c000653bfdbc96966f1a6cffa9252873f68f244d3")
 ]
 
 # Bash recipe for building across all platforms
@@ -21,13 +21,13 @@ cd $WORKSPACE/srcdir
 
 install_license ./OpenCL-Headers/LICENSE
 
-patch ./OpenCL-Headers/tests/test_headers.c 209.patch
-patch ./OpenCL-ICD-Loader/loader/icd_platform.h 185.patch
+git apply 185.patch --directory OpenCL-ICD-Loader/
+git apply 186.patch --directory OpenCL-ICD-Loader/
 
 cmake -DCMAKE_INSTALL_PREFIX=${prefix} -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -S ./OpenCL-Headers -B ./OpenCL-Headers/build
 cmake --build ./OpenCL-Headers/build --target install -j${nproc}
 
-cmake -DCMAKE_PREFIX_PATH=${prefix} -DCMAKE_INSTALL_PREFIX=${prefix} -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -S ./OpenCL-ICD-Loader -B ./OpenCL-ICD-Loader/build
+cmake -DCMAKE_PREFIX_PATH=${prefix} -DCMAKE_INSTALL_PREFIX=${prefix} -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DOPENCL_ICD_LOADER_DISABLE_OPENCLON12=ON -S ./OpenCL-ICD-Loader -B ./OpenCL-ICD-Loader/build
 cmake --build ./OpenCL-ICD-Loader/build --target install -j${nproc}
 """
 
